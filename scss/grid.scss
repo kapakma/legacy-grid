@@ -1,0 +1,37 @@
+$container-max-width: 960px;
+$num-cols: 12;
+$col-gap: 20px;
+$row-gap: 10px;
+$percent: (1/$num-cols);
+$width: ($container-max-width)/$num-cols;
+$content-pct: ($width - $col-gap)/$width * $percent;
+$gap-pct: $col-gap/$width * $percent;
+
+.grid {
+  margin-right: $col-gap;
+  box-sizing: border-box;
+
+  .row {
+    clear: both;
+
+    >.col {
+      float: left;
+      width: percentage(($width - $col-gap)/$width * $percent);
+      margin-left: percentage($col-gap/$width * $percent);
+      margin-bottom: $row-gap;
+      background: #ccc;
+
+      @for $i from 2 through 12 {
+        &.span-#{$i} {
+          width: percentage($i * $content-pct + ($i - 1) * $gap-pct);
+        }
+      }
+
+      @for $i from 1 through 11 {
+        &.offset-by-#{$i} {
+          margin-left: percentage($i * $content-pct + ($i + 1) * $gap-pct);
+        }
+      }
+    }
+  }
+}
